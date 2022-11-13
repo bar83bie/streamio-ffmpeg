@@ -23,12 +23,12 @@ module FFMPEG
 
       apply_transcoder_options
 
-      input = @transcoder_options[:input] || []
-      input_array = []
-      if input.is_a?(Array)
-        input.each {|i| input_array += ['-i', i]}
-      end
-      # @input = @transcoder_options[:input] unless @transcoder_options[:input].nil?
+#       input = @transcoder_options[:input] || []
+#       input_array = []
+#       if input.is_a?(Array)
+#         input.each {|i| input_array += ['-i', i]}
+#       end
+      @input = @transcoder_options[:input] unless @transcoder_options[:input].nil?
 
       input_options = @transcoder_options[:input_options] || []
       iopts = []
@@ -39,7 +39,7 @@ module FFMPEG
         input_options.each { |k, v| iopts += ['-' + k.to_s, v] }
       end
 
-      @command = [FFMPEG.ffmpeg_binary, '-y', *iopts, *input_array, *@raw_options.to_a, @output_file]
+      @command = [FFMPEG.ffmpeg_binary, '-y', *iopts, '-i', @input, *@raw_options.to_a, @output_file]
     end
 
     def run(&block)
