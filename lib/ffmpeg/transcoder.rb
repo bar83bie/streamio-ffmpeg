@@ -18,6 +18,8 @@ module FFMPEG
       @output_file = output_file
 
       @raw_options, @transcoder_options = optimize_screenshot_parameters(options, transcoder_options)
+      FFMPEG.logger.info("options #{options}")
+      FFMPEG.logger.info("raw_options #{@raw_options}")
 
       @errors = []
 
